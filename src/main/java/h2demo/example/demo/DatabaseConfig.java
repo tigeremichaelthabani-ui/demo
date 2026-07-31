@@ -1,36 +1,35 @@
 package h2demo.example.demo;
+import javax.sql.DataSource;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.beans.factory.annotation.Value;
 
+@Configuration
 public class DatabaseConfig {
 
-    private static final Properties properties = new Properties();
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
 
-    static {
-        try (InputStream input = DatabaseConfig.class.getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                System.out.println("Sorry, unable to find config.properties");
-                System.exit(1);
-            }
+    @Value("${spring.datasource.username}")
+    private String dbUsername;
 
-            // Load the properties file
-            properties.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    @Value("${spring.datasource.password}")
+    private String dbPassword;
 
-    public static String getDbUrl() {
-        return properties.getProperty("db.url");
-    }
+    @Value("${spring.datasource.driver-class-name}")
+    private String driverClassName;
 
-    public static String getDbUsername() {
-        return properties.getProperty("db.username");
-    }
-
-    public static String getDbPassword() {
-        return properties.getProperty("db.password");
+    @Bean
+    public DataSource dataSource() {
+        return DataSourceBuilder.create()
+                .type(HikariDataSource.class)
+                .url(dbUrl)
+                .username(dbUsername)
+                .password(dbPassword)
+                .driverClassName(driverClassName)
+                .build();
     }
 }
