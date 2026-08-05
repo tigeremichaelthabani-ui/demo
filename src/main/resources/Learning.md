@@ -7,7 +7,7 @@
       <scope>runtime</scope>
       </dependency>
       What is the purpose of scope in a Spring Boot project when you add the dependency like com.h2database in a mvn project pom.xml file?
-      compile - when compling and running
+      compile - when compiling and running
       test
       runtime - when running
       not specified - default compile
@@ -36,19 +36,19 @@ spring.jpa.hibernate.ddl-auto=update
 @Configuration
 public class DatabaseConfig {
 
-    @Value("${spring.datasource.url}")
+  '''  @Value("${spring.datasource.url}")
     private String dbUrl;
 
-    @Value("${spring.datasource.username}")
+  '''  @Value("${spring.datasource.username}")
     private String dbUsername;
 
-    @Value("${spring.datasource.password}")
+   ''' @Value("${spring.datasource.password}")
     private String dbPassword;
 
-    @Value("${spring.datasource.driver-class-name}")
+  '''  @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
 
-    @Bean
+   ''' @Bean
     public DataSource dataSource() {
         return DataSourceBuilder.create()
                 .type(HikariDataSource.class)
