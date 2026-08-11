@@ -1,0 +1,7 @@
+POST http://localhost:8080/students
+Content-Type: application/json
+
+{
+  "name": "Michael",
+  "email": "michael@gmail.com"
+}
