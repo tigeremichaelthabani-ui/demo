@@ -214,3 +214,24 @@ before going online.
 The empty tag disables that.
 
 For Spring Boot projects, this is standard:
+
+INTERFACES
+•	interface in Java is a blueprint or contract that defines a set of methods without implementing their logic. It tells a class what it must do, but not how to do it.
+In a Spring Boot application, deciding whether to use interfaces for your Controllers and Services depends heavily on your specific architecture, scaling needs, and team preferences.
+1. Controllers: Interfaces are Rarely Recommended
+   It is not recommended to create interfaces for your Controllers (e.g., UserController and UserControllerImpl)
+   •	Why you should avoid them: Controllers form the entry point of your HTTP web layer. They are bound directly to web-specific mapping annotations like @GetMapping or @PostMapping. Since a Controller class is almost never swapped out for a different implementation or reused by other classes, an interface adds redundant, boilerplate code with zero architectural benefit.
+   •	The Exception: The only time a Controller interface is highly useful is if you are using a design-first API approach (like OpenAPI/Swagger Code Generator). The tool automatically generates Java interfaces containing the HTTP mapping metadata, and you simply write a class that implements them.
+2. Services: When to Use vs. Avoid Interfaces
+   Historically, early versions of Spring required interfaces to perform tasks like transaction management via JDK dynamic proxies. Modern Spring Boot uses CGLIB subclass-based proxying by default, meaning interfaces are completely optional.
+   Instead of a blanket rule, evaluate your specific project against these criteria:
+   RECOMMENDED: Use an Interface for a Service When:
+   •	You have multiple implementations: If you have an OrderService interface, but need a CreditCardOrderService and a CryptoOrderService to handle different payment routes, an interface allows you to cleanly swap implementations using Spring's @Qualifier annotation.
+   •	You are building an external Library/SDK: If you are publishing your service logic for other teams or external apps to use, exposing only the interface encapsulates your implementation details cleanly.
+   •	You strictly follow Clean/Hexagonal Architecture: If you are isolating your pure business domain from external infrastructure (like databases or third-party APIs), interfaces act as ports that keep your core logic loosely coupled.
+   •	You need functional segregation: You want to restrict what certain parts of your app can see. For example, separating read actions from write actions via a ReadOnlyUserService interface.
+   🔴 NOT RECOMMENDED: Avoid Interfaces (Use Concrete Classes) When:
+   •	It is a 1-to-1 relationship: If every single MyService interface in your app has exactly one MyServiceImpl class, you are adding double the files and maintenance for no functional gain. 
+   •	Testing is your only reason: Developers used to create interfaces just to mock services in unit tests. Today, modern testing tools like Mockito let you mock concrete classes (@Mock UserService) seamlessly without requiring an interface.
+   •	You are building a standard CRUD/Microservice application: For standard microservices with linear database operations, concrete service classes keep the project lean, readable, and faster to refactor. 
+
