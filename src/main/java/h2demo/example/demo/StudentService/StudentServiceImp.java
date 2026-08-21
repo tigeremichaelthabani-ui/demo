@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class service {
+public class StudentServiceImp {
 
 
     private final StudentRepository studentRepository;
 
 
-    public service(StudentRepository studentRepository) {
+    public StudentServiceImp(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
