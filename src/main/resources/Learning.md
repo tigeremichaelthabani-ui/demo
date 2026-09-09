@@ -1809,4 +1809,4 @@ Retrieve student 1
 
 # 23. One-Sentence Summary
 
-> **REST is an architectural style where clients interact with server-side resources through stateless HTTP requests, commonly using methods such as GET, POST, PUT, PATCH and DELETE, with data often represented using JSON.**
+> **REST is an architectural style where clients interact with server-side resources through stateless HTTP requests, commonly using methods such as GET, POST, PUT, PATCH and DELETE, etc. with data often represented using JSON.**
