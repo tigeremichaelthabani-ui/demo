@@ -6,17 +6,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StudentServiceImp {
+public class studentServiceImp {
 
 
-    private final StudentRepository studentRepository;
+    private StudentRepository studentRepository;
 
-
-    public StudentServiceImp(StudentRepository studentRepository) {
+    public studentServiceImp(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
-
-
     // Save student
     public Students saveStudent(Students student) {
 
@@ -48,4 +45,19 @@ public class StudentServiceImp {
         studentRepository.deleteById(id);
 
     }
-}
+
+    public Students updateStudent(Long id, Students student) {
+
+        Students existingStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        existingStudent.setName(student.getName());
+        existingStudent.setAge(student.getAge());
+
+        return studentRepository.save(existingStudent);
+    }
+
+    private Long id;
+    Students students = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+    }

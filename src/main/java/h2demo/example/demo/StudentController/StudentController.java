@@ -1,6 +1,6 @@
 package h2demo.example.demo.StudentController;
 import h2demo.example.demo.StudentEntity.Students;
-import h2demo.example.demo.StudentService.StudentServiceImp;
+import h2demo.example.demo.StudentService.StudentServiceImpl;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +12,10 @@ import java.util.List;
 public class StudentController {
 
 
-    private final StudentServiceImp studentStudentServiceImp;
+    private final StudentServiceImpl studentStudentServiceImp;
 
 
-    public StudentController(StudentServiceImp studentStudentServiceImp) {
+    public StudentController(StudentServiceImpl studentStudentServiceImp) {
         this.studentStudentServiceImp = studentStudentServiceImp;
     }
 
@@ -43,6 +43,15 @@ public class StudentController {
 
         return studentStudentServiceImp.getStudentById(id);
 
+    }
+    @PutMapping("/{id}")
+    public Students updateStudent(
+            @PathVariable Long id,
+            @RequestBody Students student) {
+
+        Students students;
+        students = studentStudentServiceImp.updateStudent(id, student);
+        return students;
     }
 
 

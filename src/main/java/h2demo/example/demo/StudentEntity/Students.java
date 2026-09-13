@@ -41,4 +41,12 @@ import jakarta.persistence.*;
         public void setEmail(String email) {
             this.email = email;
         }
-    }
+
+        public Object getAge() {
+            return getAge();
+        }
+
+        public void setAge(Object age) {
+        }
+    };
+
